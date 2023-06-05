@@ -1,0 +1,36 @@
+version: '3'
+services:
+  proxy:
+    container_name: proxy
+    build:
+      context: .
+      dockerfile: Dockerfile.proxy
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+  database:
+    container_name: database
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /var/data/mysql/secrets/root_pass
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - jmdb2ldap-database-data:/var/lib/mysql
+      - jmdb2ldap-database-secrets:/var/data/mysql/secrets
+  jmdb2ldap:
+    volumes:
+      - ./:/var/www/html
+volumes:
+  jmdb2ldap-database-data:
+    external: true
+  jmdb2ldap-database-secrets:
+    external: true
+networks:
+  default:
+    name: jenkins
+  jenkins:
+    external: true
