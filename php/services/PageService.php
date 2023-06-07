@@ -6,7 +6,10 @@
 
     abstract class Page {
         public abstract static function getTitle(): string;
-        public abstract static function render(): void;
+        public static function preprocess(): void {
+        }
+        public abstract static function renderContent(): void;
+        public abstract static function renderNavigation(): void;
     }
 
     define('PAGES', [
@@ -20,7 +23,9 @@
 
         public static function render(): void {
             $pageId = self::getPageId();
-
+            PAGES[$pageId]::preprocess();
+            
+            $pageId = self::getPageId();
             self::renderBreadcrumbs($pageId);
             self::renderContent($pageId);
         }
@@ -43,31 +48,18 @@
 ?>
             <div class="bg-body">
                 <div class="container">
-                    <?php PAGES[$pageId]::render(); ?>
+                    <?php PAGES[$pageId]::renderContent(); ?>
                 </div>
 
-                <div class="container mt-4 d-flex justify-content-center">
-                    <?php self::renderNavigation($pageId); ?>
+                <div class="container my-4 d-flex justify-content-center">
+                    <?php PAGES[$pageId]::renderNavigation(); ?>
                 </div>
-            </div>
-<?php
-        }
-
-        private static function renderNavigation(int $pageId): void {
-?>
-            <div class="container mt-4 d-flex justify-content-center">
-                <?php if ($pageId > 1) { ?>
-                    <a href="?page=<?php echo($pageId - 1); ?>" type="button" class="btn btn-secondary m-1"><i class="bi bi-arrow-left"></i> Vorige Seite</a>
-                <?php } ?>
-                <?php if ($pageId < COUNT(PAGES)) { ?>
-                    <a href="?page=<?php echo($pageId + 1); ?>" type="button" class="btn btn-success m-1">Nächste Seite <i class="bi bi-arrow-right"></i></a>
-                <?php } ?>
             </div>
 <?php
         }
 
         private static function getPageId(): int {
-            $pageId = $_GET['page'] ?? 1;
+            $pageId = intval($_POST['page'] ?? 1);
 
             if ($pageId < 1) {
                 $pageId = 1;

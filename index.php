@@ -18,7 +18,7 @@
 <body>
     <nav class="navbar bg-body-secondary p-1">
         <div class="container justify-content-center">
-            <a class="navbar-brand p-0" href="#">
+            <a class="navbar-brand p-0" href="/">
                 <img src="favicon.png" alt="Logo" height="30px" class="m-0 me-2 d-inline-block align-text-top">
                 <span class="text-ci-primary">Junges Münsterschwarzach</span>
                 <span> - </span>
@@ -29,7 +29,9 @@
 
     <?php PageService::render(); ?>
 
+    <script type="text/javascript" src="js/jquery-3.7.0.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
 </body>
 
 </html>
