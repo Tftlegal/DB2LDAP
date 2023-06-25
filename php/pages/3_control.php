@@ -1,5 +1,5 @@
 <?php
-    require('./php/services/DatabaseService.php');
+    require_once('./php/services/DatabaseService.php');
 
     class ControlPage extends Page {
 
@@ -9,7 +9,7 @@
 
         public static function preprocess(): void {
             try {
-                $_POST = array_merge($_POST, DatabaseService::loadUser($_POST['eMailAddress'] ?? '', $_POST['password'] ?? ''));
+                $_POST = array_merge($_POST, DatabaseService::getUser($_POST['eMailAddress'] ?? '', $_POST['password'] ?? ''));
                 $_POST['state'] = self::getState();
                 $_POST['eatingHabit'] = self::getEatingHabit();
             } catch (Exception $exc) {
@@ -203,7 +203,7 @@
                     <div class="row mt-4">
                         <div class="col-sm-9 offset-sm-3">
                             <small class="form-text text-warning">
-                                Hinweis: Sollten Werte von ausgegrauten Attributen inkorrekt sein,
+                                Hinweis: Sollten Werte von ausgegrauten Attribute inkorrekt sein,
                                 dann sollten diese vor der Migration über das
                                 <a href="https://app.junges-muensterschwarzach.de/profile" target="_blank">Profil</a>
                                 in der App korrigiert werden.
@@ -213,7 +213,7 @@
                     
                     <!-- error -->
                     <?php if (isset($_POST['error']) === true) { ?>
-                        <div class="row mt-3">
+                        <div id="error" class="row mt-3">
                             <div class="col-sm-9 offset-sm-3">
                                 <small class="form-text text-danger"><?php echo($_POST['error']); ?></small>
                             </div>

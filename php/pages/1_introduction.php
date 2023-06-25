@@ -11,7 +11,8 @@
                 new QA(
                     "Was ist DB<span class='text-danger'>2</span>LDAP?",
                     "Diese Website führt euch durch den Migrationsprozess, um eure <strong>Benutzerdaten von der Datenbank des App-Servers
-                     zu unserem neuen Verzeichnisdienst</strong> zu migrieren."
+                     zu unserem neuen Verzeichnisdienst</strong> zu migrieren.",
+                     true
                 ),
                 new QA(
                     "Warum werden die Benutzerdaten migriert?",
@@ -63,14 +64,6 @@
                 )
                 ];
             ?>
-            <h2></h2>
-            <span></span>
-
-            <h2></h2>
-            <span></span>
-
-            <h2></h2>
-            <span></span>
 
             <div class="accordion" id="QAs">
                 <?php for ($i = 0; $i < COUNT($QAs); ++$i) { ?>
@@ -80,7 +73,7 @@
                                 <?php echo($QAs[$i]->getQuestion()); ?>
                             </button>
                         </h2>
-                        <div id="QA<?php echo($i); ?>" class="accordion-collapse collapse show" data-bs-parent="#QAs">
+                        <div id="QA<?php echo($i); ?>" class="accordion-collapse collapse <?php if ($QAs[$i]->isOpen()) echo('show'); ?>" data-bs-parent="#QAs">
                             <div class="accordion-body">
                                 <?php echo($QAs[$i]->getAnswer()); ?>
                             </div>

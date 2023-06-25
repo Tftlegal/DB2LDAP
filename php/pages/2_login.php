@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <?php if (isset($_POST['error']) === true) { ?>
-                    <div class="row mt-3">
+                    <div id="error" class="row mt-3">
                         <div class="col-sm-9 offset-sm-3">
                             <small class="form-text text-danger"><?php echo($_POST['error']); ?></small>
                         </div>

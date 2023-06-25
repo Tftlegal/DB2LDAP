@@ -6,8 +6,11 @@ services:
     restart: always
     volumes:
       - jmdb2ldap-secrets:/var/data/secrets/jmdb2ldap
+      - certbot-conf:/var/data/certbot-conf:ro
 volumes:
   jmdb2ldap-secrets:
+    external: true
+  certbot-conf:
     external: true
 networks:
   default:
