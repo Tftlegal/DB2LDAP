@@ -97,7 +97,7 @@ class ConclusionPage extends Page
             'telephoneNumber' => 'phoneNumber',
             'title' => [
                 'displayName',
-                function($v) {
+                function ($v) {
                     switch ($v) {
                         case preg_match("/^br\./i", $v):
                             return "Bruder";
@@ -111,19 +111,36 @@ class ConclusionPage extends Page
                 }
             ],
             'uid' => 'userId',
-            'userPassword' => 'password'
+            'userPassword' => [
+                'password',
+                function ($v) {
+                    $salt = substr(
+                        str_shuffle(
+                            str_repeat(
+                                'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+                                4
+                            )
+                        ),
+                        0,
+                        4
+                    );
+                    return '{SSHA}' . base64_encode(
+                        sha1($v.$salt, TRUE) . $salt
+                    );
+                }
+            ]
         ];
 
         // apply mappings
         foreach ($mapping as $ldapKey => $dbSpec) {
             $dbKey = is_array($dbSpec) ? $dbSpec[0] : $dbSpec;
-            $dbFn = is_array($dbSpec) ? $dbSpec[1] : fn($x) => $x;
-            
+            $dbFn = is_array($dbSpec) ? $dbSpec[1] : fn ($x) => $x;
+
             if (!isset($user[$dbKey])) {
                 unset($ldapUser[$ldapKey]);
                 continue;
             }
-            
+
             $value = $dbFn($user[$dbKey]);
 
             if (is_null($value)) {
@@ -140,7 +157,7 @@ class ConclusionPage extends Page
     private static function getGroupMemberships(array $user): array
     {
         $groupMemberships = [];
-        
+
         // kulei
         if ($user['accessLevel'] >= 30) {
             $groupMemberships[] = GroupDNs::KULEI;
@@ -169,12 +186,12 @@ class ConclusionPage extends Page
 ?>
         <h2>Migration erfolgreich</h2>
         <span class="text-success">Deine Benutzerdaten wurden erfolgreich von der App-Datenbank zum LDAP-Server synchronisiert.</span>
-<?php
+    <?php
     }
 
     public static function renderNavigation(): void
     {
-?>
+    ?>
         <form method="post" class="d-none">
             <input type="number" name="page" value="<?php echo (array_search(IntroductionPage::class, PAGES)); ?>" />
             <input type="submit" id="submit" />

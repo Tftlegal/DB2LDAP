@@ -25,7 +25,10 @@
             $pageId = self::getPageId();
             PAGES[$pageId]::preprocess();
             
-            // var_dump($_POST);
+            if (isset($_GET['debug'])) {
+                var_dump($_POST);
+            }
+            
             $pageId = self::getPageId();
             self::renderBreadcrumbs($pageId);
             self::renderContent($pageId);
