@@ -1,5 +1,5 @@
 <?php
-    require_once('./secrets/db.php');
+    require_once('/var/data/secrets/jmdb2ldap/db.php');
 
     enum AccessLevels: string {
         case account_accessLevel_developer = 'Entwickler';

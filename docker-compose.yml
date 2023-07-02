@@ -5,7 +5,7 @@ services:
     image: jenkinsluckev/db2ldap:${JMDB2LDAP_BUILD_TYPE:-local}
     restart: always
     volumes:
-      - jmdb2ldap-secrets:/var/data/secrets/jmdb2ldap
+      - jmdb2ldap-secrets:/var/data/secrets/jmdb2ldap:ro
       - certbot-conf:/var/data/certbot-conf:ro
 volumes:
   jmdb2ldap-secrets:

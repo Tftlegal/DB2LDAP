@@ -1,5 +1,5 @@
 <?php
-require_once('./secrets/ldap.php');
+require_once('/var/data/secrets/jmdb2ldap/ldap.php');
 
 enum GroupDNs: string
 {
