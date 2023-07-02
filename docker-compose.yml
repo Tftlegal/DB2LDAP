@@ -2,7 +2,7 @@ version: '3'
 services:
   jmdb2ldap:
     container_name: jmdb2ldap
-    image: jenkinsluckev/db2ldap:latest
+    image: jenkinsluckev/db2ldap:${JMDB2LDAP_BUILD_TYPE:-local}
     restart: always
     volumes:
       - jmdb2ldap-secrets:/var/data/secrets/jmdb2ldap
