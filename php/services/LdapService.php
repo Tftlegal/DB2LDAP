@@ -99,7 +99,7 @@ class LdapService
                 NULL,
                 LDAP_OPT_X_TLS_CACERTFILE,
                 sprintf(
-                    '/var/data/certbot-conf/live/%s/chain.pem',
+                    '/var/data/certbot-conf-www/live/%s/chain.pem',
                     LDAP_SERVER
                 )
             );

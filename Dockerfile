@@ -7,3 +7,4 @@ RUN apt-get update && \
 RUN docker-php-ext-install mysqli
 WORKDIR /var/www/html
 COPY . ./
+ENTRYPOINT ["./entrypoint.sh"]
