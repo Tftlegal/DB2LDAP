@@ -172,8 +172,9 @@
                     <div class="row my-2">
                         <label class="col-sm-3 col-form-label" for="birthdate">Geburtsdatum:</label>
                         <div class="col-sm-9">
-                            <input id="birthdate" class="form-control" name="birthdate" type="date"
-                                value="<?php echo(strstr($_POST['birthdate'] ?? '', ' ', true)); ?>" disabled/>
+                            <input id="birthdate" class="form-control" name="birthdate"
+                                type="<?php echo(isset($_POST['birthdate']) ? 'datetime-local' : 'text'); ?>"
+                                value="<?php echo($_POST['birthdate'] ?? '-'); ?>" disabled/>
                         </div>
                     </div>
 
@@ -222,6 +223,7 @@
 
                     <!-- hidden -->
                     <input type="password" name="password" value="<?php echo($_POST['password']); ?>" class="d-none"/>
+                    <input type="checkbox" name="isActivated" <?php if ($_POST['isActivated'] == 1) echo("checked"); ?> class="d-none"/>
                     <input type="number" id="page" name="page" value="<?php echo(array_search(ConclusionPage::class, PAGES)); ?>" class="d-none"/>
                     <input type="submit" id="submit" class="d-none"/>
                 </form>

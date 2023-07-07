@@ -1,0 +1,2 @@
+- check $_POST reversing in 4_conclusion not for empty, but filled out fields
+- check inserting of null/empty values into LDAP

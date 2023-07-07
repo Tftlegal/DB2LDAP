@@ -13,6 +13,8 @@ class ConclusionPage extends Page
     public static function preprocess(): void
     {
         try {
+            // reverse field transformations upon error
+            self::reversePOSTValues();
             // only works as long as modified attributes do not exist in the database schema yet, otherwise merge attributes manually
             $user = array_merge($_POST, DatabaseService::getUser($_POST['eMailAddress'], $_POST['password']));
 
@@ -28,6 +30,18 @@ class ConclusionPage extends Page
         } catch (Exception $exc) {
             $_POST['page'] = array_search(ControlPage::class, PAGES);
             $_POST['error'] = 'Fehler: ' . $exc->getMessage();
+        }
+    }
+
+    private static function reversePOSTValues(): void {
+        foreach ($_POST as $key => $value) {
+            if ($value === '' || (in_array($key, ['modificationDate', 'birthdate']) && $value === '-')) {
+                $_POST[$key] = null;
+            }
+
+            if (in_array($key, ['allowPost', 'allowNewsletter', 'isActivated']) && in_array($value, ['on', 'off'])) {
+                $_POST[$key] = $value === 'on' ? 1 : 0;
+            }
         }
     }
 
