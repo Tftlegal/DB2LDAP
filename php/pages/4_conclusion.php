@@ -150,7 +150,7 @@ class ConclusionPage extends Page
             $dbKey = is_array($dbSpec) ? $dbSpec[0] : $dbSpec;
             $dbFn = is_array($dbSpec) ? $dbSpec[1] : fn ($x) => $x;
 
-            if (!isset($user[$dbKey])) {
+            if (($user[$dbKey] ?? '') === '') {
                 unset($ldapUser[$ldapKey]);
                 continue;
             }
